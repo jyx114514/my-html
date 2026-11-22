@@ -14,9 +14,9 @@ export const CONFIG = {
   // isForeground 标记人物 + 伞所在的层：地面倒影波动不会作用到这一层，伞沿滴水跟随这一层移动。
   // ---------------------------------------------------------------------------
   layers: [
-    { src: "assets/bg/layer-far.png",  depth: 0.25 },
-    { src: "assets/bg/layer-mid.png",  depth: 0.55 },
-    { src: "assets/bg/layer-near.png", depth: 1.0, isForeground: true }
+    { src: "assets/bg/layer-far.png",  depth: 0.18 },
+    { src: "assets/bg/layer-mid.png",  depth: 0.36 },
+    { src: "assets/bg/layer-near.png", depth: 0.58, isForeground: true }
   ],
   // 完整背景图：轻量档（手机 / 低帧率）只加载这一张；不支持 WebGL 时 CSS 也用它（见 css/style.css）
   fullImage: "assets/bg/full.jpg",
@@ -24,8 +24,8 @@ export const CONFIG = {
   neonMask: "",
 
   background: {
-    parallax: 0.022,        // 鼠标视差强度（相对屏幕宽度的比例）
-    overscan: 1.07,         // 画面预留放大量，避免视差时露出边缘
+    parallax: 0.014,        // 鼠标视差强度（相对屏幕宽度的比例）
+    overscan: 1.04,         // 画面预留放大量，避免视差时露出边缘
     scrollZoom: 0.14,       // 滚动到底时镜头额外推近的比例
     scrollBlur: 3.2,        // 滚动到底时背景模糊程度（mipmap 级别）
     scrollDarken: 0.38,     // 滚动到底时背景压暗比例，保证文字可读

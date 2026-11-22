@@ -35,14 +35,15 @@ export const PROJECTS = [
     link: "https://github.com/jyx114514/token-paid"
   },
   {
-    title: "项目二 · 占位",
-    subtitle: "Project Two",
+    title: "personal-html",
+    subtitle: "OPEN PROJECT",
     year: "2026",
-    tags: ["设计", "交互"],
+    tags: ["Agent工具"],
+    image: "assets/project/2.png",
     accent: ["#ffb36b", "#ff6f91"],
-    summary: "一句话介绍这个项目解决了什么问题。",
-    detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
-    link: "#"
+    summary: "把 ChatGPT 对话、科学笔记和本地计算流程整理成结构清晰、可阅读和探索的交互式 HTML 教材或笔记。",
+    detail: "比ChatGPT的Chat模式更全面的交互组件，可记笔记的交互式 HTML。Agent 负责组织内容、检索与核查资料、补充解释和制作交互；仓库提供制作规范、共享样式、组件及构建检查工具。默认每个主题交付一个可离线打开的 HTML 文件，也支持可选的 VitePress 网站模式。默认只有一套html样式，可以让自己的Agent添加，修改",
+    link: "https://github.com/jyx114514/personal-html-book"
   },
   {
     title: "项目三 · 占位",

@@ -241,8 +241,8 @@ async function startScene() {
     const follow = 1 - Math.pow(0.001, delta);       // 约 0.1 秒追上一半
     const scrollFollow = 1 - Math.pow(0.0005, delta);
     const parallaxOn = tier !== "reduced";
-    state.pointer.x += ((parallaxOn ? pointerTarget.x : 0) - state.pointer.x) * follow * 0.6;
-    state.pointer.y += ((parallaxOn ? pointerTarget.y : 0) - state.pointer.y) * follow * 0.6;
+    state.pointer.x += ((parallaxOn ? pointerTarget.x : 0) - state.pointer.x) * follow * 0.35;
+    state.pointer.y += ((parallaxOn ? pointerTarget.y : 0) - state.pointer.y) * follow * 0.35;
     state.scroll += (scrollTarget - state.scroll) * scrollFollow;
     state.pointerPx.x = pointerPx.x;
     state.pointerPx.y = pointerPx.y;
