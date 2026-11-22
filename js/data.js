@@ -3,20 +3,20 @@
 export const PROFILE = {
   name: "天繁",
   nameEn: "Tianfan Yunxiang Jiang",
-  role: "生物学在读，同时参与小模型微调等深度学习工作",
+  role: "生物学在读，同时参与小模型微调，部分技术路线探索等深度学习工作",
   tagline: "何处是我们寻找的彼岸？",
   email: "2944007545@qq.com"
 };
 
 export const ABOUT = {
   paragraphs: [
-    "这里是一段自我介绍的占位文字。可以写你是谁、正在做什么、关心什么问题，以及你希望别人记住你的哪一点。",
-    "第二段可以写你的工作方式或兴趣爱好。比如喜欢在下雨天散步、听着耳机里的歌，把路上看到的光影记下来。"
+    {text: "中国农业大学在读，生物学和数据科学双修，预计2027年6月毕业，研究生就读于华西生物治疗全国重点实验室。",indent:true},
+    {text: "目前在清华大学做毕业设计，最近已经忙的起飞",indent:true}
   ],
   facts: [
-    { label: "方向", value: "前端 / 设计 / 研究" },
-    { label: "状态", value: "开放合作" },
-    { label: "爱好", value: "雨天 · 音乐 · 摄影" }
+    { label: "方向", value: "生物学什么都做，计算机主要是深度学习" },
+    { label: "状态", value: "本科在读，欢迎学术讨论，通过下面的联系方式联系我" },
+    { label: "爱好", value: "折腾软件，尝试新想法，偶尔去吃点好吃的" }
   ]
 };
 
@@ -52,79 +52,18 @@ export const PROJECTS = [
     detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
     link: "#"
   },
-  {
-    title: "项目四 · 占位",
-    subtitle: "Project Four",
-    year: "2025",
-    tags: ["研究", "可视化"],
-    accent: ["#c8a6ff", "#ff8fc7"],
-    summary: "一句话介绍这个项目解决了什么问题。",
-    detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
-    link: "#"
-  },
-  {
-    title: "项目五 · 占位",
-    subtitle: "Project Five",
-    year: "2024",
-    tags: ["移动端"],
-    accent: ["#8fffd2", "#4f9dff"],
-    summary: "一句话介绍这个项目解决了什么问题。",
-    detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
-    link: "#"
-  },
-  {
-    title: "项目六 · 占位",
-    subtitle: "Project Six",
-    year: "2024",
-    tags: ["开源"],
-    accent: ["#ffd36b", "#ff7a7a"],
-    summary: "一句话介绍这个项目解决了什么问题。",
-    detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
-    link: "#"
-  }
-];
-
-// level 取 0~100，用于技能环形进度
-export const SKILLS = [
-  {
-    group: "开发",
-    groupEn: "Engineering",
-    items: [
-      { name: "技能 A", level: 90 },
-      { name: "技能 B", level: 80 },
-      { name: "技能 C", level: 70 }
-    ]
-  },
-  {
-    group: "设计",
-    groupEn: "Design",
-    items: [
-      { name: "技能 D", level: 85 },
-      { name: "技能 E", level: 65 },
-      { name: "技能 F", level: 60 }
-    ]
-  },
-  {
-    group: "其他",
-    groupEn: "Others",
-    items: [
-      { name: "技能 G", level: 75 },
-      { name: "技能 H", level: 55 },
-      { name: "技能 I", level: 50 }
-    ]
-  }
+  
 ];
 
 export const EXPERIENCE = [
-  { period: "2025 — 至今", title: "职位 / 角色占位", org: "机构名称占位", desc: "一句话描述主要工作和成果。" },
-  { period: "2023 — 2025", title: "职位 / 角色占位", org: "机构名称占位", desc: "一句话描述主要工作和成果。" },
-  { period: "2020 — 2023", title: "学历 / 学校占位", org: "学校名称占位", desc: "一句话描述专业方向或代表性经历。" }
+  { period: "2027/9 —", title: "研究生", org: "华西生物治疗全国重点实验室", desc: "研究生已保送" },
+  { period: "2026/9 — 至今", title: "毕业设计", org: "清华大学", desc: "所做项目具体方向暂时保密" },
+  { period: "2025/7 — 2025/9", title: "暑研", org: "北京大学", desc: "参与神经递质荧光探针的开发" },
+  { period: "2023 — 2027", title: "本科", org: "中国农业大学", desc: "生物，计算机双修，URP和竞赛做过植物激酶，显微技术的研究" }
 ];
 
-// icon 可选：github / mail / x / bilibili / link
 export const CONTACTS = [
-  { label: "GitHub", icon: "github", href: "https://github.com/" },
-  { label: "邮箱", icon: "mail", href: "mailto:hello@example.com" },
-  { label: "Bilibili", icon: "bilibili", href: "https://www.bilibili.com/" },
-  { label: "博客", icon: "link", href: "#" }
+  { label: "GitHub", icon: "github", href: "https://github.com/jyx114514" }
 ];
+
+
