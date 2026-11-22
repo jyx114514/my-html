@@ -20,17 +20,19 @@ export const ABOUT = {
   ]
 };
 
-// accent 是卡片封面的渐变主色，取自背景里的霓虹色
+// accent 是没有封面图时的渐变主色；想用图片时加上 image（封面图）和可选的 images（详情配图数组）
 export const PROJECTS = [
   {
-    title: "项目一 · 占位",
-    subtitle: "Project One",
+    title: "Token Paid ",
+    subtitle: "OPEN PROJECT",
     year: "2026",
-    tags: ["Three.js", "WebGL"],
-    accent: ["#ff7eb3", "#7a8cff"],
-    summary: "一句话介绍这个项目解决了什么问题。",
-    detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。可以放 2~3 段。",
-    link: "#"
+    tags: ["python包"],
+    image: "assets/project/1.png",              // 卡片和弹层顶部的封面图
+    //images: ["assets/projects/detail1.png"],           可选：点开弹层后在介绍下方展示的配图
+    accent: ["#ff7eb3", "#7a8cff"],               // 不填 image 时自动退回这个渐变封面
+    summary: "读取codex，workbuddy本地文件，计算详细的token消耗，模型调用",
+    detail: "支持详细的输入输出统计，每个session及之下的Threads，同会话下每次已识别模型的调用都可以单独统计",
+    link: "https://github.com/jyx114514/token-paid"
   },
   {
     title: "项目二 · 占位",
@@ -52,7 +54,18 @@ export const PROJECTS = [
     detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
     link: "#"
   },
-  
+  /*
+  {
+    title: "项目三 · 占位",
+    subtitle: "Project Three",
+    year: "2025",
+    tags: ["Python", "数据"],
+    accent: ["#6be3ff", "#5b6cff"],
+    summary: "一句话介绍这个项目解决了什么问题。",
+    detail: "这里是项目详情的占位文字：背景、你的角色、关键难点、最终效果。",
+    link: "#"
+  },
+  */
 ];
 
 export const EXPERIENCE = [
@@ -63,7 +76,9 @@ export const EXPERIENCE = [
 ];
 
 export const CONTACTS = [
-  { label: "GitHub", icon: "github", href: "https://github.com/jyx114514" }
+  { label: "GitHub", icon: "github", href: "https://github.com/jyx114514" },
+  { label: "Discord：tianfan0001", icon: "discord", copy: "tianfan0001" },
+  { label: "Discord 群", icon: "discord", href: "https://x.com/Pyuyi233/status/2108064975139094774", note: "Discord 群的群主是学姐，我只是平时经常在里面聊。" }
 ];
 
 

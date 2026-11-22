@@ -214,6 +214,11 @@ body.no-webgl #scene, body.no-webgl #glass { display: none; }
 
 .button--glass { border-radius: 999px; }
 .button--glass:hover { background: linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08)); }
+.button--glass.is-copied {
+  color: #dcffec;
+  background: linear-gradient(160deg, rgba(125, 255, 181, 0.3), rgba(125, 255, 181, 0.12));
+  box-shadow: inset 0 1px 0 rgba(220, 255, 236, 0.5), 0 10px 28px -10px rgba(125, 255, 181, 0.55);
+}
 
 /* ---------------------------------------------------------------------------
    导航胶囊
@@ -488,6 +493,7 @@ body.is-loading .nav { opacity: 0; transform: translate(-50%, -20px); }
 }
 .project__cover {
   position: relative;
+  display: block;
   aspect-ratio: 16 / 10;
   border-radius: calc(var(--radius-l) - 10px);
   overflow: hidden;
@@ -495,6 +501,16 @@ body.is-loading .nav { opacity: 0; transform: translate(-50%, -20px); }
     radial-gradient(120% 90% at 20% 15%, var(--c1), transparent 60%),
     radial-gradient(120% 90% at 85% 90%, var(--c2), transparent 60%),
     #1d2540;
+}
+.project__cover.has-image {
+  aspect-ratio: auto;
+  background: transparent;
+}
+.project__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
 }
 .project__cover::after {
   /* 封面上的雨丝纹理，呼应背景 */
@@ -504,17 +520,8 @@ body.is-loading .nav { opacity: 0; transform: translate(-50%, -20px); }
   background: repeating-linear-gradient(100deg, transparent 0 14px, rgba(255, 255, 255, 0.07) 14px 15px);
   transition: transform 1.2s var(--ease);
 }
-.project:hover .project__cover::after { transform: translateY(12px); }
-.project__index {
-  position: absolute;
-  left: 18px;
-  bottom: 12px;
-  font-size: 54px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: rgba(255, 255, 255, 0.86);
-  mix-blend-mode: overlay;
-}
+.project__cover.has-image::after { display: none; }
+.project:hover .project__cover:not(.has-image)::after { transform: translateY(12px); }
 .project__body { display: block; padding: 18px 10px 10px; }
 .project__meta {
   display: flex;
@@ -591,6 +598,12 @@ body.is-loading .nav { opacity: 0; transform: translate(-50%, -20px); }
 }
 .contact__text { margin: 0 auto 30px; max-width: 32em; color: var(--text-2); font-size: 17px; }
 .contact__actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
+.contact__note {
+  margin: 20px auto 0;
+  max-width: 34em;
+  font-size: 13.5px;
+  color: var(--text-3);
+}
 
 .footer {
   position: relative;
@@ -682,9 +695,30 @@ body.is-loading .fx-toggle { opacity: 0; }
   transform-origin: top left;
 }
 .modal__cover { aspect-ratio: 16 / 7; }
+.modal__cover.has-image { aspect-ratio: auto; }
+.modal__cover.has-image .project__img {
+  position: static;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+}
 .modal__body { padding: 26px 26px 22px; }
 .modal__title { margin: 6px 0 12px; font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.02em; }
 .modal__detail { margin: 0 0 24px; font-size: 16.5px; color: var(--text-2); }
+.modal__gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.modal__gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: contain;
+  box-shadow: 0 12px 30px -16px rgba(6, 10, 28, 0.55);
+}
 .modal__close {
   position: absolute;
   top: 26px;

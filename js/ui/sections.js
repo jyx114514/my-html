@@ -9,6 +9,7 @@ const ICONS = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>',
+  discord: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.38-.44.87-.61 1.25a18.3 18.3 0 0 0-5.48 0 12.6 12.6 0 0 0-.62-1.25.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.89 1.52.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.23-2a.08.08 0 0 0-.04-.11 13.1 13.1 0 0 1-1.87-.89.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.29a.08.08 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.06 0a.08.08 0 0 1 .08.01c.12.1.25.2.37.29a.08.08 0 0 1-.01.13c-.6.35-1.22.65-1.87.89a.08.08 0 0 0-.04.11c.36.7.77 1.37 1.22 2a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.06c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42Zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.96-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Z"/></svg>',
   x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.2h1.7L7.4 4.7H5.58l11.1 14.5Z"/></svg>',
   bilibili: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3.5"/><path d="m8 3 3 3M16 3l-3 3M9 12v1.5M15 12v1.5"/></svg>',
   link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg>'
@@ -65,16 +66,26 @@ function renderAbout() {
 }
 
 function coverStyle(project) {
-  return `--c1:${project.accent[0]};--c2:${project.accent[1]}`;
+  const accent = project.accent || ["#ff7eb3", "#7a8cff"];
+  return `--c1:${accent[0]};--c2:${accent[1]}`;
+}
+
+function renderCover(project, extraClass = "") {
+  const hasImage = Boolean(project.image);
+  const imageTag = hasImage
+    ? `<img class="project__img" src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" loading="lazy">`
+    : "";
+  return `
+    <span class="project__cover ${extraClass} ${hasImage ? "has-image" : ""}" style="${coverStyle(project)}">
+      ${imageTag}
+    </span>`;
 }
 
 function renderProjects() {
   const container = document.querySelector("[data-projects]");
   container.innerHTML = PROJECTS.map((project, index) => `
     <button class="project glass tilt" type="button" data-project="${index}" data-reveal style="--delay:${0.06 * (index % 3)}s">
-      <span class="project__cover" style="${coverStyle(project)}">
-        <span class="project__index">${String(index + 1).padStart(2, "0")}</span>
-      </span>
+      ${renderCover(project)}
       <span class="project__body">
         <span class="project__meta"><span>${escapeHtml(project.subtitle)}</span><span>${escapeHtml(project.year)}</span></span>
         <span class="project__title">${escapeHtml(project.title)}</span>
@@ -100,15 +111,24 @@ function renderTimeline() {
 
 function renderContact() {
   const container = document.querySelector("[data-contact]");
-  const github = CONTACTS.find((contact) => contact.icon === "github") || CONTACTS[0];
+  const links = CONTACTS.map((contact) => {
+    const icon = ICONS[contact.icon] || ICONS.link;
+    if (contact.copy) {
+      return `<button class="button button--glass glass" type="button" data-copy="${escapeHtml(contact.copy)}" data-magnetic>${icon} <span>${escapeHtml(contact.label)}</span></button>`;
+    }
+    return `<a class="button button--glass glass" href="${escapeHtml(contact.href)}" target="_blank" rel="noopener" data-magnetic>${icon} ${escapeHtml(contact.label)}</a>`;
+  }).join("");
+  const notes = CONTACTS.filter((contact) => contact.note)
+    .map((contact) => `<p class="contact__note">${escapeHtml(contact.note)}</p>`)
+    .join("");
   container.innerHTML = `
-    
     <h2 class="contact__title">聊聊过去，现在，和未来？</h2>
     <p class="contact__text">无论是合作、交流还是单纯打个招呼，都欢迎来信。</p>
     <div class="contact__actions">
-      <button class="button button--primary" type="button" data-copy-email data-magnetic>${ICONS.copy} <span>复制邮箱</span></button>
-      ${github ? `<a class="button button--glass glass" href="${escapeHtml(github.href)}" target="_blank" rel="noopener" data-magnetic>${ICONS.github} ${escapeHtml(github.label)}</a>` : ""}
-    </div>`;
+      <button class="button button--primary" type="button" data-copy="${escapeHtml(PROFILE.email)}" data-magnetic>${ICONS.copy} <span>复制邮箱</span></button>
+      ${links}
+    </div>
+    ${notes}`;
   document.querySelector("[data-footer]").textContent =
     `© ${new Date().getFullYear()} ${PROFILE.name} · Made with rain & Three.js`;
 }
@@ -143,22 +163,24 @@ async function copyText(text) {
 }
 
 function initCopyEmail() {
-  let resetTimer = 0;
+  const timers = new WeakMap();
   document.addEventListener("click", async (event) => {
-    const button = event.target.closest("[data-copy-email]");
+    const button = event.target.closest("[data-copy]");
     if (!button) return;
+    const text = button.dataset.copy;
+    if (!button.dataset.originalHtml) button.dataset.originalHtml = button.innerHTML;
     try {
-      await copyText(PROFILE.email);
+      await copyText(text);
       button.classList.add("is-copied");
       button.innerHTML = `${ICONS.check} <span>已复制</span>`;
-      showToast(`已复制邮箱：${PROFILE.email}`);
-      clearTimeout(resetTimer);
-      resetTimer = setTimeout(() => {
+      showToast(`已复制：${text}`);
+      clearTimeout(timers.get(button));
+      timers.set(button, setTimeout(() => {
         button.classList.remove("is-copied");
-        button.innerHTML = `${ICONS.copy} <span>复制邮箱</span>`;
-      }, 2000);
+        button.innerHTML = button.dataset.originalHtml;
+      }, 2000));
     } catch {
-      showToast(`邮箱：${PROFILE.email}`);
+      showToast(text);
     }
   });
 }
@@ -201,15 +223,17 @@ function initModal({ reducedMotion }) {
     const project = PROJECTS[index];
     sourceCard = trigger;
     lastFocus = document.activeElement;
+    const gallery = Array.isArray(project.images) && project.images.length
+      ? `<div class="modal__gallery">${project.images.map((src) => `<img src="${escapeHtml(src)}" alt="${escapeHtml(project.title)}" loading="lazy">`).join("")}</div>`
+      : "";
     card.innerHTML = `
       <button class="modal__close" type="button" data-modal-close data-magnetic aria-label="关闭">${ICONS.close}</button>
-      <div class="project__cover modal__cover" style="${coverStyle(project)}">
-        <span class="project__index">${String(index + 1).padStart(2, "0")}</span>
-      </div>
+      ${renderCover(project, "modal__cover")}
       <div class="modal__body modal__content-fade">
         <div class="project__meta"><span>${escapeHtml(project.subtitle)}</span><span>${escapeHtml(project.year)}</span></div>
         <h3 class="modal__title" id="modal-title">${escapeHtml(project.title)}</h3>
         <p class="modal__detail">${escapeHtml(project.detail)}</p>
+        ${gallery}
         <div class="tags" style="margin-bottom:24px">${project.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
         <a class="button button--primary" href="${escapeHtml(project.link)}" target="_blank" rel="noopener" data-magnetic>查看项目 ${ICONS.arrow}</a>
       </div>`;
