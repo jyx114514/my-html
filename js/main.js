@@ -56,6 +56,89 @@ let effectsEnabled = localStorage.getItem(FX_STORAGE_KEY) !== "false";
 const fxToggle = document.querySelector("[data-fx-toggle]");
 const fxState = document.querySelector("[data-fx-state]");
 
+// ---------------------------------------------------------------------------
+// 雨声环境音：与雨效开关绑定，支持淡入淡出；若被浏览器拦截自动播放，在首次交互时自动补播
+// ---------------------------------------------------------------------------
+function createRainAudio(audioConfig) {
+  if (!audioConfig || !audioConfig.src) return { setEnabled() {} };
+  const audio = new Audio(audioConfig.src);
+  audio.loop = true;
+  audio.preload = "auto";
+  audio.volume = 0;
+
+  const targetVolume = Math.max(0, Math.min(1, audioConfig.volume ?? 0.16));
+  const fadeMs = Math.max(0, audioConfig.fadeMs ?? 600);
+  let fadeFrame = 0;
+  let wanted = false;
+
+  function fadeTo(toVolume, onDone) {
+    cancelAnimationFrame(fadeFrame);
+    const fromVolume = audio.volume;
+    if (fadeMs === 0 || Math.abs(toVolume - fromVolume) < 0.001) {
+      audio.volume = toVolume;
+      if (onDone) onDone();
+      return;
+    }
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min(1, (now - start) / fadeMs);
+      audio.volume = fromVolume + (toVolume - fromVolume) * progress;
+      if (progress < 1) {
+        fadeFrame = requestAnimationFrame(step);
+      } else if (onDone) {
+        onDone();
+      }
+    }
+    fadeFrame = requestAnimationFrame(step);
+  }
+
+  let unlockHandler = null;
+  function clearGestureWait() {
+    if (!unlockHandler) return;
+    window.removeEventListener("pointerdown", unlockHandler);
+    window.removeEventListener("keydown", unlockHandler);
+    unlockHandler = null;
+  }
+
+  function tryPlay() {
+    if (!wanted) return;
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.then === "function") {
+      playPromise.then(() => {
+        clearGestureWait();
+        if (wanted) fadeTo(targetVolume);
+      }).catch(() => {
+        // 浏览器阻止未交互前的自动播放：等待用户首次点击或按键时自动播放
+        if (!wanted || unlockHandler) return;
+        unlockHandler = () => {
+          clearGestureWait();
+          if (wanted) tryPlay();
+        };
+        window.addEventListener("pointerdown", unlockHandler);
+        window.addEventListener("keydown", unlockHandler);
+      });
+    } else {
+      fadeTo(targetVolume);
+    }
+  }
+
+  function setEnabled(enabled) {
+    wanted = Boolean(enabled);
+    if (wanted) {
+      tryPlay();
+    } else {
+      clearGestureWait();
+      fadeTo(0, () => {
+        if (!wanted) audio.pause();
+      });
+    }
+  }
+
+  return { setEnabled };
+}
+
+const rainAudio = createRainAudio(CONFIG.audio);
+
 function renderToggle() {
   fxToggle.setAttribute("aria-pressed", String(effectsEnabled));
   fxState.textContent = effectsEnabled ? TIER_LABELS[tier] : "已关闭";
@@ -193,6 +276,7 @@ async function startScene() {
     effectsEnabled = !effectsEnabled;
     localStorage.setItem(FX_STORAGE_KEY, String(effectsEnabled));
     renderToggle();
+    rainAudio.setEnabled(effectsEnabled);
     if (!effectsEnabled && drops) drops.clear();
   });
 
@@ -269,6 +353,7 @@ async function startScene() {
 
   resize();
   renderToggle();
+  rainAudio.setEnabled(effectsEnabled);
   requestAnimationFrame(frame);
   markReady();
 }

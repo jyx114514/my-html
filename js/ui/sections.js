@@ -122,7 +122,7 @@ function renderContact() {
     .map((contact) => `<p class="contact__note">${escapeHtml(contact.note)}</p>`)
     .join("");
   container.innerHTML = `
-    <h2 class="contact__title">聊聊过去，现在，和未来？</h2>
+    <h2 class="contact__title">聊聊过去，现在，和未来</h2>
     <p class="contact__text">无论是合作、交流还是单纯打个招呼，都欢迎来信。</p>
     <div class="contact__actions">
       <button class="button button--primary" type="button" data-copy="${escapeHtml(PROFILE.email)}" data-magnetic>${ICONS.copy} <span>复制邮箱</span></button>
@@ -219,6 +219,22 @@ function initModal({ reducedMotion }) {
     return `translate(${from.left - to.left}px, ${from.top - to.top}px) scale(${scaleX}, ${scaleY})`;
   }
 
+  function renderModalActions(project) {
+    const list = [];
+    if (Array.isArray(project.links) && project.links.length) {
+      project.links.forEach((item) => {
+        if (item && item.href) list.push({ label: item.label || "查看链接", href: item.href });
+      });
+    } else {
+      if (project.link) list.push({ label: project.linkLabel || "查看项目", href: project.link });
+      if (project.link2) list.push({ label: project.link2Label || "更多链接", href: project.link2 });
+    }
+    if (!list.length) return "";
+    return `<div class="modal__actions">${list.map((item, idx) => `
+      <a class="button ${idx === 0 ? "button--primary" : "button--glass glass"}" href="${escapeHtml(item.href)}" target="_blank" rel="noopener" data-magnetic>${escapeHtml(item.label)} ${ICONS.arrow}</a>`
+    ).join("")}</div>`;
+  }
+
   function open(index, trigger) {
     const project = PROJECTS[index];
     sourceCard = trigger;
@@ -235,7 +251,7 @@ function initModal({ reducedMotion }) {
         <p class="modal__detail">${escapeHtml(project.detail)}</p>
         ${gallery}
         <div class="tags" style="margin-bottom:24px">${project.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>
-        <a class="button button--primary" href="${escapeHtml(project.link)}" target="_blank" rel="noopener" data-magnetic>查看项目 ${ICONS.arrow}</a>
+        ${renderModalActions(project)}
       </div>`;
     modal.hidden = false;
     document.body.style.overflow = "hidden";

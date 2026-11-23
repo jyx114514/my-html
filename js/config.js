@@ -87,6 +87,13 @@ export const CONFIG = {
     pushRadius: 60          // 鼠标推开大水滴的半径（CSS 像素）
   },
 
+  // 雨声环境音：与右下角「雨效」开关绑定
+  audio: {
+    src: "rain.mp3",
+    volume: 0.65,           // 柔和的背景音量（0~1）
+    fadeMs: 650             // 开关时的淡入淡出时长（毫秒）
+  },
+
   // 性能分级
   perf: {
     maxDPR: 2,

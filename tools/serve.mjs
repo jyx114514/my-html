@@ -17,7 +17,10 @@ const types = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
-  ".svg": "image/svg+xml"
+  ".svg": "image/svg+xml",
+  ".mp3": "audio/mpeg",
+  ".wav": "audio/wav",
+  ".ogg": "audio/ogg"
 };
 
 export function startServer(listenPort = port) {

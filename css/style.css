@@ -345,7 +345,7 @@ main { position: relative; z-index: 2; }
 }
 .hero__name {
   margin: 0;
-  font-size: clamp(56px, 8.4vw, 120px);
+  font-size: clamp(28px, 8.4vw, 60px);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -400,47 +400,6 @@ body.is-ready .hero__content > * { opacity: 1; transform: none; filter: none; }
 }
 body.is-ready .hero__name-char { opacity: 1; transform: none; }
 body.is-loading .nav { opacity: 0; transform: translate(-50%, -20px); }
-
-.scroll-hint {
-  position: absolute;
-  left: 50%;
-  bottom: max(28px, env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  margin-left: -22px;
-  width: 44px;
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  transition: opacity 0.6s var(--ease), translate 0.5s var(--spring);
-}
-.scroll-hint__mouse {
-  position: relative;
-  width: 24px;
-  height: 38px;
-  border: 1.5px solid rgba(255, 255, 255, 0.55);
-  border-radius: 14px;
-}
-.scroll-hint__drop {
-  position: absolute;
-  left: 50%;
-  top: 7px;
-  width: 4px;
-  height: 7px;
-  margin-left: -2px;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  background: #fff;
-  animation: scroll-drop 1.8s var(--ease) infinite;
-}
-@keyframes scroll-drop {
-  0% { transform: translateY(0); opacity: 0; }
-  25% { opacity: 1; }
-  80% { transform: translateY(14px); opacity: 0; }
-  100% { opacity: 0; }
-}
 
 /* ---------------------------------------------------------------------------
    关于
@@ -719,6 +678,11 @@ body.is-loading .fx-toggle { opacity: 0; }
   object-fit: contain;
   box-shadow: 0 12px 30px -16px rgba(6, 10, 28, 0.55);
 }
+.modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 .modal__close {
   position: absolute;
   top: 26px;
@@ -853,7 +817,6 @@ body.has-cursor .cursor { display: block; }
   .switch { width: 46px; height: 28px; }
   .switch__thumb { width: 22px; height: 22px; }
   .fx-toggle[aria-pressed="true"] .switch__thumb { transform: translateX(18px); }
-  .scroll-hint { display: none; }
 }
 
 /* 系统开启「减少动态效果」：取消倾斜、弹簧与渐显位移 */
