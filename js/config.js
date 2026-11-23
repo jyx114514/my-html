@@ -91,7 +91,10 @@ export const CONFIG = {
   audio: {
     src: "rain.mp3",
     volume: 0.65,           // 柔和的背景音量（0~1）
-    fadeMs: 650             // 开关时的淡入淡出时长（毫秒）
+    fadeMs: 650,            // 开关时的淡入淡出时长（毫秒）
+    loopTrimStart: 1.4,     // 循环时跳过曲首的低音量段（秒）
+    loopTrimEnd: 1.5,       // 循环时跳过曲尾的低音量段（秒）
+    loopCrossfade: 1        // 曲尾与曲首的重叠时长（秒）
   },
 
   // 性能分级

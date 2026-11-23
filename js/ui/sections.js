@@ -208,6 +208,7 @@ function initReveal() {
 function initModal({ reducedMotion }) {
   const modal = document.querySelector("[data-modal]");
   const card = document.querySelector("[data-modal-card]");
+  const background = document.querySelectorAll("[data-nav], main, [data-footer], [data-fx-toggle]");
   let sourceCard = null;
   let lastFocus = null;
   const easing = "cubic-bezier(0.2, 0.9, 0.25, 1.05)";
@@ -254,6 +255,8 @@ function initModal({ reducedMotion }) {
         ${renderModalActions(project)}
       </div>`;
     modal.hidden = false;
+    // 详情打开时，让键盘和辅助技术停留在弹层内。
+    background.forEach((element) => { element.inert = true; });
     document.body.style.overflow = "hidden";
     // 强制布局后再加 is-open，让背景淡入过渡生效
     card.getBoundingClientRect();
@@ -271,7 +274,7 @@ function initModal({ reducedMotion }) {
   }
 
   async function close() {
-    if (modal.hidden) return;
+    if (!modal.classList.contains("is-open")) return;
     modal.classList.remove("is-open");
     if (!reducedMotion && sourceCard) {
       const from = sourceCard.getBoundingClientRect();
@@ -285,6 +288,7 @@ function initModal({ reducedMotion }) {
     }
     if (sourceCard) sourceCard.style.visibility = "";
     modal.hidden = true;
+    background.forEach((element) => { element.inert = false; });
     document.body.style.overflow = "";
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
@@ -298,7 +302,19 @@ function initModal({ reducedMotion }) {
     if (event.target.closest("[data-modal-close]")) close();
   });
   document.addEventListener("keydown", (event) => {
+    if (modal.hidden) return;
     if (event.key === "Escape") close();
+    if (event.key !== "Tab") return;
+    const controls = card.querySelectorAll("button, a[href]");
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 }
 

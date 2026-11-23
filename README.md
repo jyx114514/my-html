@@ -69,7 +69,8 @@ neonMask: "assets/bg/neon-mask.png",   // 没有就留空，自动按亮度估�
 | 系统开启「减少动态效果」 | 静态背景 + 少量雨丝，没有视差、涟漪、倾斜动画 |
 | 浏览器不支持 WebGL2 | 静态背景图 + CSS 雨 |
 
-右下角的「雨效」开关可以手动关闭/开启动态效果，选择会保存在浏览器里。
+右下角的「雨效」开关同时控制画面雨效和背景音乐，选择会保存在浏览器里。浏览器限制自动播放时，首次点击、轻触或按键后开始播放。
+更换背景音乐后，可在 `js/config.js` 的 `audio` 配置中调整循环首尾的裁剪时长和交叉淡化时长，单位为秒。
 
 ## 文件结构
 
@@ -79,6 +80,7 @@ css/style.css         Liquid Glass 样式、各分区、响应式
 js/config.js          视觉效果参数
 js/data.js            个人信息（占位）
 js/main.js            启动、性能分级、渲染循环、特效开关
+js/audio.js           背景音乐解码、循环和音量淡入淡出
 js/scene/view.js      图片 ↔ 屏幕映射（cover 铺满、视差、推近），各特效共享
 js/scene/background.js 背景合成、霓虹、倒影、景深、点击涟漪
 js/scene/rain.js      空中雨丝（移植自 personal/js/rain.js）
