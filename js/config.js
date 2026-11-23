@@ -90,7 +90,7 @@ export const CONFIG = {
   // 雨声环境音：与右下角「雨效」开关绑定
   audio: {
     src: "rain.mp3",
-    volume: 0.45,           // 柔和的背景音量（0~1）
+    volume: 0.25,           // 柔和的背景音量（0~1）
     fadeMs: 650,            // 开关时的淡入淡出时长（毫秒）
     loopTrimStart: 1.4,     // 循环时跳过曲首的低音量段（秒）
     loopTrimEnd: 1.5,       // 循环时跳过曲尾的低音量段（秒）
